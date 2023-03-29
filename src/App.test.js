@@ -5,6 +5,7 @@ it('should render properly', () => {
   render(<App />);
 
   screen.getByRole('heading', {name:/the incredible drum machine/i});
+
   screen.getByRole('button', {name:'Q'});
   screen.getByRole('button', {name:'W'});
   screen.getByRole('button', {name:'E'});
@@ -14,5 +15,7 @@ it('should render properly', () => {
   screen.getByRole('button', {name:'Z'});
   screen.getByRole('button', {name:'X'});
   screen.getByRole('button', {name:'C'});
+
+  screen.getByText(/press a key/i);
 
 });
