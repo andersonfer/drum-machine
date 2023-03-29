@@ -18,8 +18,12 @@ class DrumMachine extends React.Component{
   render(){
     return (
       <div id="drum-machine" >
-        <span id="title">The Incredible Drum Machine</span>
-         <Display/>
+        <header>
+          <h1>The Incredible Drum Machine</h1>
+        </header>
+        <main>
+          <Display/>
+        </main>
         <footer>by @andersonfer</footer>
       </div>
     );
