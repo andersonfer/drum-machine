@@ -61,8 +61,8 @@ header h1{
   display:flex;
   border: 1px solid black;
   padding:2px;
-  width:20%;
-  min-height:5vh;
+  width:25%;
+  min-height:7vh;
   justify-content:center;
   align-items:center;
   border-radius:0.3em;

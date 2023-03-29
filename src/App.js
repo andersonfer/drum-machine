@@ -101,10 +101,10 @@ class AudioKey extends React.Component{
 
   render(){
     return (
-      <div className="drum-pad" id={'div_'+this.props.trigger} onClick={this.play}>
+      <button className="drum-pad" id={'div_'+this.props.trigger} onClick={this.play}>
         {this.props.trigger}
         <audio className="clip" id={this.props.trigger} src={this.props.audioSrc}/>
-      </div>
+      </button>
     );
   }
 }
