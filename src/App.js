@@ -9,9 +9,7 @@ export default function App() {
 }
 
 class DrumMachine extends React.Component{
-  constructor(props){
-    super(props);
-  }
+
   componentDidMount = () => {
     //window.focus();
   }
@@ -66,9 +64,6 @@ class Display extends React.Component{
 }
 
 class AudioKey extends React.Component{
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount = () => {
     document.addEventListener("keypress",this.handleKeyPress);
