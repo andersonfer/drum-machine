@@ -20,7 +20,7 @@ class DrumMachine extends React.Component{
           <h1>The Incredible Drum Machine</h1>
         </header>
         <main>
-          <Display/>
+          <Keypad/>
         </main>
         <footer>by @andersonfer</footer>
       </div>
@@ -28,7 +28,7 @@ class DrumMachine extends React.Component{
   }
 }
 
-class Display extends React.Component{
+class Keypad extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -43,7 +43,7 @@ class Display extends React.Component{
   }
   render(){
     return (
-      <div id="display">
+      <div id="keypad">
         <div id="keys">
           <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" updateName={this.updateName}/>
           <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" updateName={this.updateName}/>
