@@ -1,4 +1,4 @@
-import { render, screen, within, fireEvent } from '@testing-library/react';
+import { render, screen, within, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -20,19 +20,25 @@ it('should render properly', () => {
   screen.getByText(/press a key/i);
 });
 
-it('should play an audio and update display when a button is clicked', async () => {
+it('should blink,play an audio and update display when a button is clicked', async () => {
   render(<App />);
+  jest.useFakeTimers();
+
   //TODO change it to test every button
   const button = screen.getByRole('button', {name:'Q'});
   const audio = within(button).getByTestId('audio-clip');
   //mock implementation of play() method from HTMLAudioElement
   const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
 
-
   await userEvent.click(button);
 
+  expect(button).toHaveClass('active');
   expect(playSpy).toHaveBeenCalledTimes(1);
   expect(screen.getByText(button.name)).toBeInTheDocument();
+
+  // Advance the timer by 500ms to check if the class has been removed
+  act(() => { jest.advanceTimersByTime(500); } );
+  expect(button.className).not.toContain('active');
 
   //TODO move it to a cleanup function
   playSpy.mockRestore();
