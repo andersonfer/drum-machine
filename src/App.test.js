@@ -20,7 +20,7 @@ it('should render properly', () => {
   screen.getByText(/press a key/i);
 });
 
-it('should blink,play an audio and update display when a button is clicked', async () => {
+it('should blink, play an audio and update display when a button is clicked', async () => {
   render(<App />);
   jest.useFakeTimers();
 
