@@ -31,7 +31,7 @@ it('should play an audio and update display when a button is clicked', async () 
 
   await userEvent.click(button);
 
-  expect(playSpy).toHaveBeenCalled();
+  expect(playSpy).toHaveBeenCalledTimes(1);
   expect(screen.getByText(button.name)).toBeInTheDocument();
 
   //TODO move it to a cleanup function
