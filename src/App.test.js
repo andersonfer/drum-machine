@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -38,3 +38,21 @@ it('should play an audio and update display when a button is clicked', async () 
   playSpy.mockRestore();
 
 });
+
+it('should play an audio and update display when the right key is pressed',
+  async () => {
+    render(<App />);
+
+    const keyToBePressed = 'Q'
+    const button = screen.getByRole('button', {name:keyToBePressed});
+    const audio = within(button).getByTestId('audio-clip');
+    //mock implementation of play() method from HTMLAudioElement
+    const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
+
+    await userEvent.keyboard(keyToBePressed);
+
+    expect(playSpy).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(button.name)).toBeInTheDocument();
+
+    playSpy.mockRestore();
+  });

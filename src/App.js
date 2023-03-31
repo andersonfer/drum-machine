@@ -74,6 +74,10 @@ class AudioKey extends React.Component{
     document.addEventListener("keypress",this.handleKeyPress);
   }
 
+  componentWillUnmount = () => {
+    document.removeEventListener("keypress",this.handleKeyPress);
+  }
+
   handleKeyPress = (e) => {
      if(e.key.toUpperCase() === this.props.trigger){
        this.play();
