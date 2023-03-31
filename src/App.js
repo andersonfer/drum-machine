@@ -55,7 +55,7 @@ class Keypad extends React.Component{
           <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" updateName={this.updateName}/>
           <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" updateName={this.updateName}/>
         </div>
-        <div id="controls">
+        <div id="display">
             {this.state.audioName}
         </div>
     </div>

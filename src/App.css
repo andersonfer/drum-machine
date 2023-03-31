@@ -48,7 +48,7 @@ header h1{
   gap:1em;
   justify-content:space-evenly;
 }
-#controls{
+#display{
   display:flex;
   background-color: var(--drum-pad-color);
   margin-bottom:1em;
