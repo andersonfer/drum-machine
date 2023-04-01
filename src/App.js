@@ -9,26 +9,6 @@ export default function App() {
 }
 
 class DrumMachine extends React.Component{
-
-  componentDidMount = () => {
-    //window.focus();
-  }
-  render(){
-    return (
-      <div id="drum-machine" >
-        <header>
-          <h1>The Incredible Drum Machine</h1>
-        </header>
-        <main>
-          <Keypad/>
-        </main>
-        <footer>by @andersonfer</footer>
-      </div>
-    );
-  }
-}
-
-class Keypad extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -36,29 +16,61 @@ class Keypad extends React.Component{
     };
   }
 
-  updateName = (audioKey) => {
+  componentDidMount = () => {
+    //window.focus();
+  }
+
+  updateDisplay = (value) => {
     this.setState({
-      audioName: audioKey.props.audioName
+      audioName:value
     });
   }
+
   render(){
     return (
-      <div id="keypad">
+      <div id="drum-machine" >
+        <header>
+          <h1>The Incredible Drum Machine</h1>
+        </header>
+        <main>
+          <div id="main-section">
+            <Keypad onClickOrKeyPressed={this.updateDisplay}/>
+            <Display value={this.state.audioName}/>
+          </div>
+        </main>
+        <footer>by @andersonfer</footer>
+      </div>
+    );
+  }
+}
+
+class Display extends React.Component{
+
+  render(){
+    return (
+      <div id="display">
+        {this.props.value}
+      </div>
+    );
+  }
+}
+
+class Keypad extends React.Component{
+  render(){
+    return (
+
         <div id="keys">
-          <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" updateName={this.updateName}/>
-          <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" updateName={this.updateName}/>
-          <AudioKey trigger="E" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" audioName="Heater 3" updateName={this.updateName}/>
-          <AudioKey trigger="A" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" audioName="Heater 4" updateName={this.updateName}/>
-          <AudioKey trigger="S" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" audioName="Clap" updateName={this.updateName}/>
-          <AudioKey trigger="D" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" audioName="Open HH" updateName={this.updateName}/>
-          <AudioKey trigger="Z" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" audioName="Kick n' Hat" updateName={this.updateName}/>
-          <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" updateName={this.updateName}/>
-          <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" updateName={this.updateName}/>
+          <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="E" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" audioName="Heater 3" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="A" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" audioName="Heater 4" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="S" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" audioName="Clap" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="D" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" audioName="Open HH" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="Z" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" audioName="Kick n' Hat" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" updateName={this.props.onClickOrKeyPressed}/>
+          <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" updateName={this.props.onClickOrKeyPressed}/>
         </div>
-        <div id="display">
-            {this.state.audioName}
-        </div>
-    </div>
+
     );
   }
 }
@@ -83,7 +95,7 @@ class AudioKey extends React.Component{
     this.blink();
     this.getAudioElement().currentTime = 0;
     this.getAudioElement().play();
-    this.props.updateName(this);
+    this.props.updateName(this.props.audioName);
   }
 
    blink = () => {
