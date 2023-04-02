@@ -5,15 +5,15 @@ import App from './App';
 const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
 
 let randomButton;
-let soundToBePlayed;
+
 //this will hold a mock implementation of the play() method
 let mockForPlayMethod;
 
 beforeEach(() => {
   render(<App />);
+
   randomButton = getRandomButtonFromKeypad();
-  soundToBePlayed = within(randomButton).getByTestId('audio-clip');
-  mockForPlayMethod = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
+  mockForPlayMethod = getMockForPlayMethod();
 })
 
 afterEach(() => {
@@ -23,6 +23,11 @@ afterEach(() => {
 getRandomButtonFromKeypad = () => {
   const randomKey = KEYPAD[Math.floor(Math.random() * KEYPAD.length)];
   return screen.getByRole('button',{name:randomKey});
+}
+
+getMockForPlayMethod = () => {
+  const soundToBePlayed = within(randomButton).getByTestId('audio-clip');
+  return jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 }
 
 it('should render properly', () => {
