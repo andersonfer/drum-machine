@@ -44,15 +44,12 @@ class DrumMachine extends React.Component{
   }
 }
 
-class Display extends React.Component{
-
-  render(){
-    return (
-      <div id="display">
-        {this.props.value}
-      </div>
-    );
-  }
+function Display({ value }){
+  return(
+    <div id="display">
+      {value}
+    </div>
+  );
 }
 
 function Keypad({ onClickOrKeyPressed }){
