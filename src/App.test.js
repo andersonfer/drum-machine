@@ -5,11 +5,13 @@ import App from './App';
 const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
 
 let targetButton;
+let soundToBePlayed;
 
 beforeEach(() => {
   render(<App />);
   const randomKey = getRandomKeyFromKeypad();
   targetButton = screen.getByRole('button',{name:randomKey});
+  soundToBePlayed = within(targetButton).getByTestId('audio-clip');
 })
 
 getRandomKeyFromKeypad = () => {
@@ -35,9 +37,8 @@ it('should render properly', () => {
 it('should blink, play an audio and update display when a button is clicked', async () => {
   jest.useFakeTimers();
 
-  const audio = within(targetButton).getByTestId('audio-clip');
   //mock implementation of play() method from HTMLAudioElement
-  const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
+  const playSpy = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 
   await userEvent.click(targetButton);
 
@@ -58,9 +59,8 @@ it('should blink, play an audio and update display when the right key is pressed
   async () => {
     jest.useFakeTimers();
 
-    const audio = within(targetButton).getByTestId('audio-clip');
     //mock implementation of play() method from HTMLAudioElement
-    const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
+    const playSpy = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 
     await userEvent.keyboard(targetButton.textContent);
 
