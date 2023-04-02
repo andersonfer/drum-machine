@@ -52,12 +52,14 @@ it('should blink when a button is clicked', async () => {
   expect(targetButton.className).not.toContain('active');
 });
 
-it('should play an audio and update display when a button is clicked', async () => {
+it('shoud update display when a button is clicked', async () => {
   await userEvent.click(targetButton);
-
-  expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
   expect(screen.getByText(targetButton.name)).toBeInTheDocument();
+})
 
+it('should play an audio when a button is clicked', async () => {
+  await userEvent.click(targetButton);
+  expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
 });
 
 it('should blink, play an audio and update display when the right key is pressed',
