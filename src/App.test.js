@@ -11,8 +11,7 @@ let mockForPlayMethod;
 
 beforeEach(() => {
   render(<App />);
-  const randomKey = getRandomKeyFromKeypad();
-  randomButton = screen.getByRole('button',{name:randomKey});
+  randomButton = getRandomButtonFromKeypad();
   soundToBePlayed = within(randomButton).getByTestId('audio-clip');
   mockForPlayMethod = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 })
@@ -21,8 +20,9 @@ afterEach(() => {
   mockForPlayMethod.mockRestore();
 })
 
-getRandomKeyFromKeypad = () => {
-  return KEYPAD[Math.floor(Math.random() * KEYPAD.length)];
+getRandomButtonFromKeypad = () => {
+  const randomKey = KEYPAD[Math.floor(Math.random() * KEYPAD.length)];
+  return screen.getByRole('button',{name:randomKey});
 }
 
 it('should render properly', () => {
