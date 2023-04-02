@@ -4,12 +4,12 @@ import App from './App';
 
 const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
 
-let buttonToBeClicked;
+let targetButton;
 
 beforeEach(() => {
   render(<App />);
   const randomKey = getRandomKeyFromKeypad();
-  buttonToBeClicked = screen.getByRole('button',{name:randomKey});
+  targetButton = screen.getByRole('button',{name:randomKey});
 })
 
 getRandomKeyFromKeypad = () => {
@@ -35,19 +35,19 @@ it('should render properly', () => {
 it('should blink, play an audio and update display when a button is clicked', async () => {
   jest.useFakeTimers();
 
-  const audio = within(buttonToBeClicked).getByTestId('audio-clip');
+  const audio = within(targetButton).getByTestId('audio-clip');
   //mock implementation of play() method from HTMLAudioElement
   const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
 
-  await userEvent.click(buttonToBeClicked);
+  await userEvent.click(targetButton);
 
-  expect(buttonToBeClicked).toHaveClass('active');
+  expect(targetButton).toHaveClass('active');
   expect(playSpy).toHaveBeenCalledTimes(1);
-  expect(screen.getByText(buttonToBeClicked.name)).toBeInTheDocument();
+  expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
-  expect(buttonToBeClicked.className).not.toContain('active');
+  expect(targetButton.className).not.toContain('active');
 
   //TODO move it to a cleanup function
   playSpy.mockRestore();
@@ -58,19 +58,19 @@ it('should blink, play an audio and update display when the right key is pressed
   async () => {
     jest.useFakeTimers();
 
-    const audio = within(buttonToBeClicked).getByTestId('audio-clip');
+    const audio = within(targetButton).getByTestId('audio-clip');
     //mock implementation of play() method from HTMLAudioElement
     const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
 
-    await userEvent.keyboard(buttonToBeClicked.textContent);
+    await userEvent.keyboard(targetButton.textContent);
 
-    expect(buttonToBeClicked).toHaveClass('active');
+    expect(targetButton).toHaveClass('active');
     expect(playSpy).toHaveBeenCalledTimes(1);
-    expect(screen.getByText(buttonToBeClicked.name)).toBeInTheDocument();
+    expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
     // Advance the timer by 500ms to check if the class has been removed
     act(() => { jest.advanceTimersByTime(500); } );
-    expect(buttonToBeClicked.className).not.toContain('active');
+    expect(targetButton.className).not.toContain('active');
 
     //TODO move it to a cleanup function
     playSpy.mockRestore();
