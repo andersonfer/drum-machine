@@ -62,17 +62,22 @@ it('shoud update display when a button is clicked', async () => {
   expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 })
 
-it('should blink, play an audio and update display when the right key is pressed',
+it('should play an audio and update display when the right key is pressed',
   async () => {
-    jest.useFakeTimers();
-
     await userEvent.keyboard(targetButton.textContent);
 
-    expect(targetButton).toHaveClass('active');
     expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
     expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
-    // Advance the timer by 500ms to check if the class has been removed
-    act(() => { jest.advanceTimersByTime(500); } );
-    expect(targetButton.className).not.toContain('active');
   });
+
+it('should blink when the right key is pressed', async () => {
+  jest.useFakeTimers();
+
+  await userEvent.keyboard(targetButton.textContent);
+
+  expect(targetButton).toHaveClass('active');
+  // Advance the timer by 500ms to check if the class has been removed
+  act(() => { jest.advanceTimersByTime(500); } );
+  expect(targetButton.className).not.toContain('active');
+});
