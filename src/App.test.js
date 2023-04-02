@@ -62,13 +62,10 @@ it('shoud update display when a button is clicked', async () => {
   expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 })
 
-it('should play an audio when the right key is pressed',
-  async () => {
-    await userEvent.keyboard(targetButton.textContent);
-
-    expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
-
-  });
+it('should play an audio when the right key is pressed', async () => {
+  await userEvent.keyboard(targetButton.textContent);
+  expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
+});
 
 it('should blink when the right key is pressed', async () => {
   jest.useFakeTimers();
