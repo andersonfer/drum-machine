@@ -66,7 +66,6 @@ it('should blink, play an audio and update display when the right key is pressed
   async () => {
     jest.useFakeTimers();
 
-
     await userEvent.keyboard(targetButton.textContent);
 
     expect(targetButton).toHaveClass('active');
@@ -76,5 +75,4 @@ it('should blink, play an audio and update display when the right key is pressed
     // Advance the timer by 500ms to check if the class has been removed
     act(() => { jest.advanceTimersByTime(500); } );
     expect(targetButton.className).not.toContain('active');
-
   });
