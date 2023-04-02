@@ -55,24 +55,20 @@ class Display extends React.Component{
   }
 }
 
-class Keypad extends React.Component{
-  render(){
-    return (
-
-        <div id="keys">
-          <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="E" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" audioName="Heater 3" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="A" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" audioName="Heater 4" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="S" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" audioName="Clap" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="D" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" audioName="Open HH" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="Z" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" audioName="Kick n' Hat" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" updateName={this.props.onClickOrKeyPressed}/>
-          <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" updateName={this.props.onClickOrKeyPressed}/>
-        </div>
-
-    );
-  }
+function Keypad({ onClickOrKeyPressed }){
+  return (
+    <div id="keys">
+      <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="E" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" audioName="Heater 3" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="A" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" audioName="Heater 4" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="S" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" audioName="Clap" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="D" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" audioName="Open HH" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="Z" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" audioName="Kick n' Hat" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" updateName={onClickOrKeyPressed}/>
+      <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" updateName={onClickOrKeyPressed}/>
+    </div>
+  );
 }
 
 class AudioKey extends React.Component{
