@@ -7,18 +7,18 @@ const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
 let targetButton;
 let soundToBePlayed;
 //this will hold a mock implementation of the play() method
-let playSpy;
+let mockForPlayMethod;
 
 beforeEach(() => {
   render(<App />);
   const randomKey = getRandomKeyFromKeypad();
   targetButton = screen.getByRole('button',{name:randomKey});
   soundToBePlayed = within(targetButton).getByTestId('audio-clip');
-  playSpy = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
+  mockForPlayMethod = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 })
 
 afterEach(() => {
-  playSpy.mockRestore();
+  mockForPlayMethod.mockRestore();
 })
 
 getRandomKeyFromKeypad = () => {
@@ -55,7 +55,7 @@ it('should blink when a button is clicked', async () => {
 it('should play an audio and update display when a button is clicked', async () => {
   await userEvent.click(targetButton);
 
-  expect(playSpy).toHaveBeenCalledTimes(1);
+  expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
   expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
 });
@@ -68,7 +68,7 @@ it('should blink, play an audio and update display when the right key is pressed
     await userEvent.keyboard(targetButton.textContent);
 
     expect(targetButton).toHaveClass('active');
-    expect(playSpy).toHaveBeenCalledTimes(1);
+    expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
     expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
     // Advance the timer by 500ms to check if the class has been removed
