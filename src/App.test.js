@@ -17,6 +17,10 @@ beforeEach(() => {
   playSpy = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 })
 
+afterEach(() => {
+  playSpy.mockRestore();
+})
+
 getRandomKeyFromKeypad = () => {
   return KEYPAD[Math.floor(Math.random() * KEYPAD.length)];
 }
@@ -50,9 +54,6 @@ it('should blink, play an audio and update display when a button is clicked', as
   act(() => { jest.advanceTimersByTime(500); } );
   expect(targetButton.className).not.toContain('active');
 
-  //TODO move it to a cleanup function
-  playSpy.mockRestore();
-
 });
 
 it('should blink, play an audio and update display when the right key is pressed',
@@ -70,6 +71,4 @@ it('should blink, play an audio and update display when the right key is pressed
     act(() => { jest.advanceTimersByTime(500); } );
     expect(targetButton.className).not.toContain('active');
 
-    //TODO move it to a cleanup function
-    playSpy.mockRestore();
   });
