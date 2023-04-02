@@ -2,9 +2,11 @@ import { render, screen, within, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
-it('should render properly', () => {
+beforeEach(() => {
   render(<App />);
+})
 
+it('should render properly', () => {
   screen.getByRole('heading', {name:/the incredible drum machine/i});
 
   screen.getByRole('button', {name:'Q'});
@@ -21,7 +23,6 @@ it('should render properly', () => {
 });
 
 it('should blink, play an audio and update display when a button is clicked', async () => {
-  render(<App />);
   jest.useFakeTimers();
 
   //TODO change it to test every button
@@ -48,8 +49,6 @@ it('should blink, play an audio and update display when a button is clicked', as
 it('should blink, play an audio and update display when the right key is pressed',
   async () => {
     jest.useFakeTimers();
-
-    render(<App />);
 
     const keyToBePressed = 'Q'
     const button = screen.getByRole('button', {name:keyToBePressed});
