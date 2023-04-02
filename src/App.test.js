@@ -4,7 +4,7 @@ import App from './App';
 
 const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
 
-let targetButton;
+let randomButton;
 let soundToBePlayed;
 //this will hold a mock implementation of the play() method
 let mockForPlayMethod;
@@ -12,8 +12,8 @@ let mockForPlayMethod;
 beforeEach(() => {
   render(<App />);
   const randomKey = getRandomKeyFromKeypad();
-  targetButton = screen.getByRole('button',{name:randomKey});
-  soundToBePlayed = within(targetButton).getByTestId('audio-clip');
+  randomButton = screen.getByRole('button',{name:randomKey});
+  soundToBePlayed = within(randomButton).getByTestId('audio-clip');
   mockForPlayMethod = jest.spyOn(soundToBePlayed, 'play').mockImplementation(() => {});
 })
 
@@ -42,43 +42,43 @@ it('should render properly', () => {
 });
 
 it('should play an audio when a button is clicked', async () => {
-  await userEvent.click(targetButton);
+  await userEvent.click(randomButton);
   expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
 });
 
 it('should blink when a button is clicked', async () => {
   jest.useFakeTimers();
 
-  await userEvent.click(targetButton);
+  await userEvent.click(randomButton);
 
-  expect(targetButton).toHaveClass('active');
+  expect(randomButton).toHaveClass('active');
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
-  expect(targetButton.className).not.toContain('active');
+  expect(randomButton.className).not.toContain('active');
 });
 
 it('shoud update display when a button is clicked', async () => {
-  await userEvent.click(targetButton);
-  expect(screen.getByText(targetButton.name)).toBeInTheDocument();
+  await userEvent.click(randomButton);
+  expect(screen.getByText(randomButton.name)).toBeInTheDocument();
 })
 
 it('should play an audio when the right key is pressed', async () => {
-  await userEvent.keyboard(targetButton.textContent);
+  await userEvent.keyboard(randomButton.textContent);
   expect(mockForPlayMethod).toHaveBeenCalledTimes(1);
 });
 
 it('should blink when the right key is pressed', async () => {
   jest.useFakeTimers();
 
-  await userEvent.keyboard(targetButton.textContent);
+  await userEvent.keyboard(randomButton.textContent);
 
-  expect(targetButton).toHaveClass('active');
+  expect(randomButton).toHaveClass('active');
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
-  expect(targetButton.className).not.toContain('active');
+  expect(randomButton.className).not.toContain('active');
 });
 
 it('should update display when the right key is pressed', async () => {
-  await userEvent.keyboard(targetButton.textContent);
-  expect(screen.getByText(targetButton.name)).toBeInTheDocument();
+  await userEvent.keyboard(randomButton.textContent);
+  expect(screen.getByText(randomButton.name)).toBeInTheDocument();
 });
