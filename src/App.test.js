@@ -2,9 +2,19 @@ import { render, screen, within, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+const KEYPAD = ['Q','W','E','A','S','D','Z','X','C'];
+
+let buttonToBeClicked;
+
 beforeEach(() => {
   render(<App />);
+  const randomKey = getRandomKeyFromKeypad();
+  buttonToBeClicked = screen.getByRole('button',{name:randomKey});
 })
+
+getRandomKeyFromKeypad = () => {
+  return KEYPAD[Math.floor(Math.random() * KEYPAD.length)];
+}
 
 it('should render properly', () => {
   screen.getByRole('heading', {name:/the incredible drum machine/i});
@@ -25,21 +35,19 @@ it('should render properly', () => {
 it('should blink, play an audio and update display when a button is clicked', async () => {
   jest.useFakeTimers();
 
-  //TODO change it to test every button
-  const button = screen.getByRole('button', {name:'Q'});
-  const audio = within(button).getByTestId('audio-clip');
+  const audio = within(buttonToBeClicked).getByTestId('audio-clip');
   //mock implementation of play() method from HTMLAudioElement
   const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
 
-  await userEvent.click(button);
+  await userEvent.click(buttonToBeClicked);
 
-  expect(button).toHaveClass('active');
+  expect(buttonToBeClicked).toHaveClass('active');
   expect(playSpy).toHaveBeenCalledTimes(1);
-  expect(screen.getByText(button.name)).toBeInTheDocument();
+  expect(screen.getByText(buttonToBeClicked.name)).toBeInTheDocument();
 
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
-  expect(button.className).not.toContain('active');
+  expect(buttonToBeClicked.className).not.toContain('active');
 
   //TODO move it to a cleanup function
   playSpy.mockRestore();
@@ -50,21 +58,19 @@ it('should blink, play an audio and update display when the right key is pressed
   async () => {
     jest.useFakeTimers();
 
-    const keyToBePressed = 'Q'
-    const button = screen.getByRole('button', {name:keyToBePressed});
-    const audio = within(button).getByTestId('audio-clip');
+    const audio = within(buttonToBeClicked).getByTestId('audio-clip');
     //mock implementation of play() method from HTMLAudioElement
     const playSpy = jest.spyOn(audio, 'play').mockImplementation(() => {});
 
-    await userEvent.keyboard(keyToBePressed);
+    await userEvent.keyboard(buttonToBeClicked.textContent);
 
-    expect(button).toHaveClass('active');
+    expect(buttonToBeClicked).toHaveClass('active');
     expect(playSpy).toHaveBeenCalledTimes(1);
-    expect(screen.getByText(button.name)).toBeInTheDocument();
+    expect(screen.getByText(buttonToBeClicked.name)).toBeInTheDocument();
 
     // Advance the timer by 500ms to check if the class has been removed
     act(() => { jest.advanceTimersByTime(500); } );
-    expect(button.className).not.toContain('active');
+    expect(buttonToBeClicked.className).not.toContain('active');
 
     //TODO move it to a cleanup function
     playSpy.mockRestore();
