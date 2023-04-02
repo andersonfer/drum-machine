@@ -41,18 +41,22 @@ it('should render properly', () => {
   screen.getByText(/press a key/i);
 });
 
-it('should blink, play an audio and update display when a button is clicked', async () => {
+it('should blink when a button is clicked', async () => {
   jest.useFakeTimers();
 
   await userEvent.click(targetButton);
 
   expect(targetButton).toHaveClass('active');
-  expect(playSpy).toHaveBeenCalledTimes(1);
-  expect(screen.getByText(targetButton.name)).toBeInTheDocument();
-
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
   expect(targetButton.className).not.toContain('active');
+});
+
+it('should play an audio and update display when a button is clicked', async () => {
+  await userEvent.click(targetButton);
+
+  expect(playSpy).toHaveBeenCalledTimes(1);
+  expect(screen.getByText(targetButton.name)).toBeInTheDocument();
 
 });
 
