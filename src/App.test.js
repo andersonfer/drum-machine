@@ -60,6 +60,10 @@ it('should blink when a button is clicked', async () => {
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
   expect(randomButton.className).not.toContain('active');
+  //cleanup
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+
 });
 
 it('shoud update display when a button is clicked', async () => {
@@ -81,6 +85,10 @@ it('should blink when the right key is pressed', async () => {
   // Advance the timer by 500ms to check if the class has been removed
   act(() => { jest.advanceTimersByTime(500); } );
   expect(randomButton.className).not.toContain('active');
+  //cleanup
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+
 });
 
 it('should update display when the right key is pressed', async () => {
