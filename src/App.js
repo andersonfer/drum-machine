@@ -2,46 +2,37 @@ import './App.css';
 
 import React from 'react';
 
+import { useState } from 'react';
+
+
 export default function App() {
   return (
     <DrumMachine />
   );
 }
 
-class DrumMachine extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      audioName: 'Press a key'
-    };
+function DrumMachine() {
+  const [audioName, setAudioName] = useState('Press a key');
+
+  function updateDisplay(audioName){
+    setAudioName(audioName);
   }
 
-  componentDidMount = () => {
-    //window.focus();
-  }
+  return (
+    <div id="drum-machine" >
+      <header>
+        <h1>The Incredible Drum Machine</h1>
+      </header>
+      <main>
+        <div id="main-section">
+          <Keypad onClickOrKeyPressed={updateDisplay}/>
+          <Display value={audioName}/>
+        </div>
+      </main>
+      <footer>by @andersonfer</footer>
+    </div>
+  );
 
-  updateDisplay = (value) => {
-    this.setState({
-      audioName:value
-    });
-  }
-
-  render(){
-    return (
-      <div id="drum-machine" >
-        <header>
-          <h1>The Incredible Drum Machine</h1>
-        </header>
-        <main>
-          <div id="main-section">
-            <Keypad onClickOrKeyPressed={this.updateDisplay}/>
-            <Display value={this.state.audioName}/>
-          </div>
-        </main>
-        <footer>by @andersonfer</footer>
-      </div>
-    );
-  }
 }
 
 function Display({ value }){
