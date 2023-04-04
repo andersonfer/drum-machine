@@ -2,7 +2,7 @@ import './App.css';
 
 import React from 'react';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 
 export default function App() {
@@ -59,56 +59,51 @@ function Keypad({ onClickOrKeyPressed }){
   );
 }
 
-class AudioKey extends React.Component{
+function AudioKey({ trigger, audioSrc, audioName, updateName }){
+  const buttonRef = useRef(null);
+  const audioRef = useRef(null);
 
-  componentDidMount = () => {
-    document.addEventListener("keypress",this.handleKeyPress);
+  const handleClick = useCallback(() => {
+    playSound();
+    blinkButton();
+    updateName(audioName);
+  }, [audioName,updateName]);
+
+  useEffect(() => {
+    function handleKeyPress(e){
+      if(e.key.toUpperCase() === trigger){
+        handleClick();
+      }
+    }
+
+    document.addEventListener("keypress",handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keypress",handleKeyPress);
+    }
+  },[trigger,handleClick]);
+
+
+  function playSound(){
+    audioRef.currentTime = 0;
+    audioRef.current.play();
   }
 
-  componentWillUnmount = () => {
-    document.removeEventListener("keypress",this.handleKeyPress);
+  function blinkButton(){
+    buttonRef.current.classList.toggle('active');
+    setTimeout(() => {buttonRef.current.classList.toggle('active');},50);
   }
 
-  handleKeyPress = (e) => {
-     if(e.key.toUpperCase() === this.props.trigger){
-       this.play();
-     }
-  }
-
-  play = () =>{
-    this.blink();
-    this.getAudioElement().currentTime = 0;
-    this.getAudioElement().play();
-    this.props.updateName(this.props.audioName);
-  }
-
-   blink = () => {
-    this.getDivElement().className += " active";
-    setTimeout(() => {this.getDivElement().className = this.getDivElement().className.replace('active','')},50);
-  }
-
-  getAudioElement = () => {
-    return document.getElementById(this.props.trigger);
-  }
-  getDivElement = () => {
-    return document.getElementById('div_'+this.props.trigger);
-  }
-
-  render(){
-    return (
-      <button name={this.props.audioName} className="drum-pad" id={'div_'+this.props.trigger} onClick={this.play}>
-
-        {this.props.trigger}
-
-        <audio
-          className="clip"
-          id={this.props.trigger}
-          src={this.props.audioSrc}
-          data-testid="audio-clip"
-        />
-      </button>
-    );
-  }
+  return (
+    <button ref={buttonRef} name={audioName} className="drum-pad" onClick={handleClick}>
+      {trigger}
+      <audio
+        ref={audioRef}
+        className="clip"
+        id={trigger}
+        src={audioSrc}
+        data-testid="audio-clip"
+      />
+    </button>
+  );
 }
-
-
