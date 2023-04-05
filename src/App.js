@@ -54,24 +54,6 @@ function Display({ value }){
 }
 
 function Keypad({ children }){
-  useEffect(() => {
-
-    function handleKeyPress(e){
-      children.forEach((audioKey) => {
-        if(e.key.toUpperCase() === audioKey.props.trigger){
-          //TODO find a way of doing this by exposing a ref
-          document.getElementsByName(audioKey.props.audioName)[0].click();
-        }
-      });
-    }
-
-    document.addEventListener("keypress",handleKeyPress);
-
-    return () => {
-      document.removeEventListener("keypress",handleKeyPress);
-    }
-  });
-
   return (
     <div id="keys">
       {children}
@@ -82,6 +64,21 @@ function Keypad({ children }){
 function AudioKey({ trigger, audioSrc, audioName, onClick }){
   const buttonRef = useRef(null);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+
+    function handleKeyPress(e){
+      if(e.key.toUpperCase() === trigger){
+        buttonRef.current.click();
+      }
+    }
+
+    document.addEventListener("keypress",handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keypress",handleKeyPress);
+    }
+  });
 
   function handleClick(){
     playSound();
