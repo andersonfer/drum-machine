@@ -70,6 +70,9 @@ header h1{
   background-color:var(--drum-pad-color);
   cursor:pointer;
 }
+.drum-pad:focus{
+  outline: none;
+}
 .active{
   background-color:var(--drum-pad-color-active);
 }
