@@ -90,7 +90,7 @@ function AudioKey({ trigger, audioSrc, audioName, onClick }){
   }
 
   function playSound(){
-    audioRef.currentTime = 0;
+    audioRef.current.currentTime = 0;
     audioRef.current.play();
   }
 
