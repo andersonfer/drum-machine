@@ -25,7 +25,7 @@ function DrumMachine() {
       </header>
       <main>
         <div id="main-section">
-          <Keypad>
+          <div id="keys">
             <AudioKey trigger="Q" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" audioName="Heater 1" onClick={handleClick} />
             <AudioKey trigger="W" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" audioName="Heater 2" onClick={handleClick} />
             <AudioKey trigger="E" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" audioName="Heater 3" onClick={handleClick} />
@@ -35,7 +35,7 @@ function DrumMachine() {
             <AudioKey trigger="Z" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" audioName="Kick n' Hat" onClick={handleClick} />
             <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" onClick={handleClick} />
             <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" onClick={handleClick} />
-          </Keypad>
+          </div>
           <Display value={audioName}/>
         </div>
       </main>
@@ -53,13 +53,6 @@ function Display({ value }){
   );
 }
 
-function Keypad({ children }){
-  return (
-    <div id="keys">
-      {children}
-    </div>
-  );
-}
 
 function AudioKey({ trigger, audioSrc, audioName, onClick }){
   const buttonRef = useRef(null);
