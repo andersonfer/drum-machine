@@ -6,12 +6,6 @@ import { useState, useRef, useEffect } from 'react';
 
 
 export default function App() {
-  return (
-    <DrumMachine />
-  );
-}
-
-function DrumMachine() {
   const [audioName, setAudioName] = useState('Press a key');
 
   function handleClick(audioName){
@@ -44,7 +38,6 @@ function DrumMachine() {
       <footer>by @andersonfer</footer>
     </div>
   );
-
 }
 
 function AudioKey({ trigger, audioSrc, audioName, onClick }){
