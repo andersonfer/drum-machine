@@ -36,7 +36,9 @@ function DrumMachine() {
             <AudioKey trigger="X" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" audioName="Kick" onClick={handleClick} />
             <AudioKey trigger="C" audioSrc="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" audioName="Closed HH" onClick={handleClick} />
           </div>
-          <Display value={audioName}/>
+          <div id="display">
+            {audioName}
+          </div>
         </div>
       </main>
       <footer>by @andersonfer</footer>
@@ -44,15 +46,6 @@ function DrumMachine() {
   );
 
 }
-
-function Display({ value }){
-  return(
-    <div id="display">
-      {value}
-    </div>
-  );
-}
-
 
 function AudioKey({ trigger, audioSrc, audioName, onClick }){
   const buttonRef = useRef(null);
